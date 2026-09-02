@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block contenido %}
+<h1>{{ encabezado }}</h1>
+<p class="bajada">{{ bajada }}</p>
+
+<div class="mandos">
+  <div class="mandos-doble">
+    <div class="mando">
+      <label for="valor">{{ etiqueta_valor }}</label>
+      <div class="caja-num">
+        <span aria-hidden="true">€</span>
+        <input type="number" id="valor" value="{{ valor_defecto }}" min="1" step="1" inputmode="numeric">
+      </div>
+    </div>
+    <div class="mando">
+      <div class="fila">
+        <label for="anios">Dentro de</label>
+        <output id="salida-anios" for="anios">10 años</output>
+      </div>
+      <input type="range" id="anios" min="1" max="30" value="10" step="1">
+    </div>
+  </div>
+</div>
+
+<section class="resultado" aria-live="polite">
+  <p class="resultado-intro" id="intro"></p>
+  <p class="cifrota" id="central">—</p>
+  <p class="rango" id="rango"></p>
+</section>
+
+<h2>La serie completa</h2>
+<p class="apunte">Arrastra el dedo sobre la grafica para leer cualquier año.</p>
+<div id="gr-linea"></div>
+<div class="leyenda">
+  <span><i class="i-pasado"></i>Reconstruido del pasado</span>
+  <span><i class="i-futuro"></i>Extrapolado al futuro</span>
+</div>
+
+<h2>Variacion de cada año</h2>
+<p class="apunte">Estas son las tasas reales publicadas. De su reparto salen los tres escenarios.</p>
+<div id="gr-barras"></div>
+
+<div class="tarjetas">
+  <div><span class="dato-valor" id="d-media">—</span><span class="dato-nombre">tasa media anual</span></div>
+  <div><span class="dato-valor" id="d-rango">—</span><span class="dato-nombre">del escenario bajo al alto</span></div>
+  <div><span class="dato-valor" id="d-anios">—</span><span class="dato-nombre">años de historico</span></div>
+</div>
+
+<div class="nota"><p>Es extrapolacion del pasado, no una prediccion.</p></div>
+{% endblock %}
+
+{% block fuente %}
+<p>Fuente: INE, serie {{ codigo_serie }}. Datos abiertos.</p>
+{% endblock %}
+
+{% block script %}
+<script id="datos" type="application/json">{{ datos_json | safe }}</script>
+<script>
+(function(){
+  const D = JSON.parse(document.getElementById("datos").textContent);
+  const $ = (i)=>document.getElementById(i);
+  const eur = Grafica.euros;
+
+  function pct(vals,p){
+    const o=[...vals].sort((a,b)=>a-b);
+    if(!o.length) return 0;
+    const i=(o.length-1)*p, b=Math.floor(i), a=Math.ceil(i);
+    return b===a ? o[b] : o[b]+(o[a]-o[b])*(i-b);
+  }
+
+  const tasas = D.tasas.map(t=>t.tasa);
+  const pb=pct(tasas,.25), pm=pct(tasas,.50), pa=pct(tasas,.75);
+  const anioBase = D.tasas[D.tasas.length-1].anio;
+
+  Grafica.barras("#gr-barras", {
+    datos: D.tasas.map(t=>({x:t.anio, y:t.tasa})),
+    formato: v => Grafica.numero(v,1)+" %",
+    titulo: "Variacion anual de cada año"
+  });
+
+  function refrescar(){
+    let v = parseFloat($("valor").value);
+    if(!isFinite(v)||v<=0) v = D.valor_defecto;
+    const n = parseInt($("anios").value,10);
+    $("salida-anios").textContent = n + (n===1?" año":" años");
+
+    const pasado=[{anio:anioBase, valor:v}];
+    for(let k=D.tasas.length-1;k>=0;k--){
+      pasado.unshift({anio:D.tasas[k].anio-1, valor: pasado[0].valor/(1+D.tasas[k].tasa/100)});
+    }
+
+    const futuro=[];
+    for(let a=0;a<=n;a++){
+      futuro.push({
+        x: anioBase+a,
+        bajo:   v*Math.pow(1+pb/100,a),
+        centro: v*Math.pow(1+pm/100,a),
+        alto:   v*Math.pow(1+pa/100,a)
+      });
+    }
+
+    const fin = futuro[futuro.length-1];
+    $("intro").textContent = "Si hoy son "+eur(v)+", en "+fin.x+" serian alrededor de";
+    $("central").textContent = eur(fin.centro);
+    Grafica.frase("#rango", ["Entre ", {fuerte: eur(fin.bajo)}, " y ", {fuerte: eur(fin.alto)}, "."]);
+
+    $("d-media").textContent = Grafica.numero(pm,1)+" %";
+    $("d-rango").textContent = Grafica.numero(pb,1)+" a "+Grafica.numero(pa,1)+" %";
+    $("d-anios").textContent = D.tasas.length;
+
+    Grafica.linea("#gr-linea", {
+      pasado: pasado.map(p=>({x:p.anio, y:p.valor})),
+      futuro: futuro,
+      formato: eur,
+      escalaCorta: v => v>=1000 ? Math.round(v/1000)+"k" : Math.round(v),
+      titulo: "Evolucion del valor"
+    });
+  }
+
+  $("valor").addEventListener("input", refrescar);
+  $("anios").addEventListener("input", refrescar);
+  refrescar();
+})();
+</script>
+{% endblock %}

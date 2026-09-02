@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Precio de la vivienda: proyeccion a partir del INE</title>
+<meta name="description" content="Como evolucionaria el precio de una vivienda si el indice del INE se comportara como en los ultimos treinta años.">
+<link rel="canonical" href="https://adrianezd.github.io/proyecciones-vivienda">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Precio de la vivienda: proyeccion a partir del INE">
+<meta property="og:description" content="Como evolucionaria el precio de una vivienda si el indice del INE se comportara como en los ultimos treinta años.">
+<meta property="og:locale" content="es_ES">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./estatico/estilo.css">
+
+</head>
+<body data-acento="vivienda">
+
+<nav class="barra" aria-label="Secciones">
+  <a class="marca" href="https://adrianezd.github.io/proyecciones/">Proyecciones</a>
+  <div class="enlaces"><a href="https://adrianezd.github.io/proyecciones-bolsa/">Bolsa</a><a href="https://adrianezd.github.io/proyecciones-materias-primas/">Materias primas</a><a href="https://adrianezd.github.io/proyecciones-divisas/">Divisas</a><a href="https://adrianezd.github.io/proyecciones-bitcoin/">Bitcoin</a><a href="https://adrianezd.github.io/proyecciones-bonos/">Bonos</a><a href="https://adrianezd.github.io/proyecciones-vivienda/" aria-current="page">Vivienda</a><a href="https://adrianezd.github.io/proyecciones-alquiler/">Alquiler</a><a href="https://adrianezd.github.io/proyecciones-gasolina/">Gasolina</a><a href="https://adrianezd.github.io/proyecciones-supermercado/">Supermercado</a><a href="https://adrianezd.github.io/proyecciones-terremotos/">Terremotos</a><a href="https://adrianezd.github.io/proyecciones-sismos/">Sismos en Espana</a>
+  </div>
+</nav>
+
+<main class="marco">
+
+<h1>Precio de la vivienda</h1>
+<p class="bajada">Coge el precio de una vivienda hoy y mira como se mueve si el indice del INE se comporta como hasta ahora.</p>
+
+<div class="mandos">
+  <div class="mandos-doble">
+    <div class="mando">
+      <label for="valor">Precio de la vivienda hoy</label>
+      <div class="caja-num">
+        <span aria-hidden="true">€</span>
+        <input type="number" id="valor" value="200000" min="1" step="1" inputmode="numeric">
+      </div>
+    </div>
+    <div class="mando">
+      <div class="fila">
+        <label for="anios">Dentro de</label>
+        <output id="salida-anios" for="anios">10 años</output>
+      </div>
+      <input type="range" id="anios" min="1" max="30" value="10" step="1">
+    </div>
+  </div>
+</div>
+
+<section class="resultado" aria-live="polite">
+  <p class="resultado-intro" id="intro"></p>
+  <p class="cifrota" id="central">—</p>
+  <p class="rango" id="rango"></p>
+</section>
+
+<h2>La serie completa</h2>
+<p class="apunte">Arrastra el dedo sobre la grafica para leer cualquier año.</p>
+<div id="gr-linea"></div>
+<div class="leyenda">
+  <span><i class="i-pasado"></i>Reconstruido del pasado</span>
+  <span><i class="i-futuro"></i>Extrapolado al futuro</span>
+</div>
+
+<h2>Variacion de cada año</h2>
+<p class="apunte">Estas son las tasas reales publicadas. De su reparto salen los tres escenarios.</p>
+<div id="gr-barras"></div>
+
+<div class="tarjetas">
+  <div><span class="dato-valor" id="d-media">—</span><span class="dato-nombre">tasa media anual</span></div>
+  <div><span class="dato-valor" id="d-rango">—</span><span class="dato-nombre">del escenario bajo al alto</span></div>
+  <div><span class="dato-valor" id="d-anios">—</span><span class="dato-nombre">años de historico</span></div>
+</div>
+
+<div class="nota"><p>Es extrapolacion del pasado, no una prediccion.</p></div>
+
+
+<footer class="pie">
+
+<p>Fuente: INE, serie IPV1279. Datos abiertos.</p>
+
+<p>Generado el 2026-09-02. Los datos se actualizan solos con una GitHub Action. Parte de <a href="https://adrianezd.github.io/proyecciones/">Proyecciones</a>.</p>
+</footer>
+</main>
+
+<script src="./estatico/grafica.js"></script>
+
+<script id="datos" type="application/json">{"tasas": [{"anio": 2007, "tasa": 9.8}, {"anio": 2008, "tasa": -1.5}, {"anio": 2009, "tasa": -6.7}, {"anio": 2010, "tasa": -2.0}, {"anio": 2011, "tasa": -7.4}, {"anio": 2012, "tasa": -13.7}, {"anio": 2013, "tasa": -10.6}, {"anio": 2014, "tasa": 0.3}, {"anio": 2015, "tasa": 3.6}, {"anio": 2016, "tasa": 4.7}, {"anio": 2017, "tasa": 6.2}, {"anio": 2018, "tasa": 6.7}, {"anio": 2019, "tasa": 5.1}, {"anio": 2020, "tasa": 2.1}, {"anio": 2021, "tasa": 3.7}, {"anio": 2022, "tasa": 7.4}, {"anio": 2023, "tasa": 4.0}, {"anio": 2024, "tasa": 8.4}, {"anio": 2025, "tasa": 12.7}], "valor_defecto": 200000}</script>
+<script>
+(function(){
+  const D = JSON.parse(document.getElementById("datos").textContent);
+  const $ = (i)=>document.getElementById(i);
+  const eur = Grafica.euros;
+
+  function pct(vals,p){
+    const o=[...vals].sort((a,b)=>a-b);
+    if(!o.length) return 0;
+    const i=(o.length-1)*p, b=Math.floor(i), a=Math.ceil(i);
+    return b===a ? o[b] : o[b]+(o[a]-o[b])*(i-b);
+  }
+
+  const tasas = D.tasas.map(t=>t.tasa);
+  const pb=pct(tasas,.25), pm=pct(tasas,.50), pa=pct(tasas,.75);
+  const anioBase = D.tasas[D.tasas.length-1].anio;
+
+  Grafica.barras("#gr-barras", {
+    datos: D.tasas.map(t=>({x:t.anio, y:t.tasa})),
+    formato: v => Grafica.numero(v,1)+" %",
+    titulo: "Variacion anual de cada año"
+  });
+
+  function refrescar(){
+    let v = parseFloat($("valor").value);
+    if(!isFinite(v)||v<=0) v = D.valor_defecto;
+    const n = parseInt($("anios").value,10);
+    $("salida-anios").textContent = n + (n===1?" año":" años");
+
+    const pasado=[{anio:anioBase, valor:v}];
+    for(let k=D.tasas.length-1;k>=0;k--){
+      pasado.unshift({anio:D.tasas[k].anio-1, valor: pasado[0].valor/(1+D.tasas[k].tasa/100)});
+    }
+
+    const futuro=[];
+    for(let a=0;a<=n;a++){
+      futuro.push({
+        x: anioBase+a,
+        bajo:   v*Math.pow(1+pb/100,a),
+        centro: v*Math.pow(1+pm/100,a),
+        alto:   v*Math.pow(1+pa/100,a)
+      });
+    }
+
+    const fin = futuro[futuro.length-1];
+    $("intro").textContent = "Si hoy son "+eur(v)+", en "+fin.x+" serian alrededor de";
+    $("central").textContent = eur(fin.centro);
+    Grafica.frase("#rango", ["Entre ", {fuerte: eur(fin.bajo)}, " y ", {fuerte: eur(fin.alto)}, "."]);
+
+    $("d-media").textContent = Grafica.numero(pm,1)+" %";
+    $("d-rango").textContent = Grafica.numero(pb,1)+" a "+Grafica.numero(pa,1)+" %";
+    $("d-anios").textContent = D.tasas.length;
+
+    Grafica.linea("#gr-linea", {
+      pasado: pasado.map(p=>({x:p.anio, y:p.valor})),
+      futuro: futuro,
+      formato: eur,
+      escalaCorta: v => v>=1000 ? Math.round(v/1000)+"k" : Math.round(v),
+      titulo: "Evolucion del valor"
+    });
+  }
+
+  $("valor").addEventListener("input", refrescar);
+  $("anios").addEventListener("input", refrescar);
+  refrescar();
+})();
+</script>
+
+</body>
+</html>
