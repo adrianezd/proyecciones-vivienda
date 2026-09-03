@@ -17,13 +17,15 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from . import datos
-from .enlaces import HUB, MENU
+from .enlaces import HUB, MENU, jsonld_pagina
 
 AQUI = Path(__file__).parent
 PROYECTO = AQUI.parent
 SALIDA = PROYECTO / "docs"
 
 BASE_URL = "https://adrianezd.github.io/proyecciones-vivienda"
+FUENTE_NOMBRE = "INE"
+FUENTE_URL = "https://www.ine.es"
 
 entorno = Environment(
     loader=FileSystemLoader(AQUI / "plantillas"),
@@ -53,6 +55,13 @@ def escribir(plantilla: str, **contexto) -> None:
     contexto.setdefault("base_url", BASE_URL)
     contexto.setdefault("ruta", "")
     contexto.setdefault("generado", HOY)
+    contexto.setdefault("jsonld", jsonld_pagina(
+        titulo=contexto["titulo"],
+        descripcion=contexto["descripcion"],
+        url=contexto["base_url"] + contexto["ruta"],
+        fuente_nombre=FUENTE_NOMBRE,
+        fuente_url=FUENTE_URL,
+    ))
 
     destino.write_text(entorno.get_template(plantilla).render(**contexto), encoding="utf-8")
     print("  escrito     index.html")
