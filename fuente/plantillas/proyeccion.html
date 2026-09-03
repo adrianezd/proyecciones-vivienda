@@ -4,6 +4,15 @@
 <p class="bajada">{{ bajada }}</p>
 
 <div class="mandos">
+  {%- if regiones %}
+  <div class="mando">
+    <label for="region">Comunidad autonoma</label>
+    <select id="region">
+      <option value="">Nacional</option>
+      {%- for r in regiones %}<option value="{{ r }}">{{ r }}</option>{% endfor %}
+    </select>
+  </div>
+  {%- endif %}
   <div class="mandos-doble">
     <div class="mando">
       <label for="valor">{{ etiqueta_valor }}</label>
@@ -68,15 +77,20 @@
     return b===a ? o[b] : o[b]+(o[a]-o[b])*(i-b);
   }
 
-  const tasas = D.tasas.map(t=>t.tasa);
-  const pb=pct(tasas,.25), pm=pct(tasas,.50), pa=pct(tasas,.75);
-  const anioBase = D.tasas[D.tasas.length-1].anio;
+  let tasasActuales = D.tasas;
+  let pb, pm, pa, anioBase;
 
-  Grafica.barras("#gr-barras", {
-    datos: D.tasas.map(t=>({x:t.anio, y:t.tasa})),
-    formato: v => Grafica.numero(v,1)+" %",
-    titulo: "Variacion anual de cada año"
-  });
+  function recalcularEscenarios(){
+    const tasas = tasasActuales.map(t=>t.tasa);
+    pb = pct(tasas,.25); pm = pct(tasas,.50); pa = pct(tasas,.75);
+    anioBase = tasasActuales[tasasActuales.length-1].anio;
+
+    Grafica.barras("#gr-barras", {
+      datos: tasasActuales.map(t=>({x:t.anio, y:t.tasa})),
+      formato: v => Grafica.numero(v,1)+" %",
+      titulo: "Variacion anual de cada año"
+    });
+  }
 
   function refrescar(){
     let v = parseFloat($("valor").value);
@@ -85,8 +99,8 @@
     $("salida-anios").textContent = n + (n===1?" año":" años");
 
     const pasado=[{anio:anioBase, valor:v}];
-    for(let k=D.tasas.length-1;k>=0;k--){
-      pasado.unshift({anio:D.tasas[k].anio-1, valor: pasado[0].valor/(1+D.tasas[k].tasa/100)});
+    for(let k=tasasActuales.length-1;k>=0;k--){
+      pasado.unshift({anio:tasasActuales[k].anio-1, valor: pasado[0].valor/(1+tasasActuales[k].tasa/100)});
     }
 
     const futuro=[];
@@ -106,7 +120,7 @@
 
     $("d-media").textContent = Grafica.numero(pm,1)+" %";
     $("d-rango").textContent = Grafica.numero(pb,1)+" a "+Grafica.numero(pa,1)+" %";
-    $("d-anios").textContent = D.tasas.length;
+    $("d-anios").textContent = tasasActuales.length;
 
     Grafica.linea("#gr-linea", {
       pasado: pasado.map(p=>({x:p.anio, y:p.valor})),
@@ -117,8 +131,18 @@
     });
   }
 
+  const selRegion = $("region");
+  if(selRegion){
+    selRegion.addEventListener("change", () => {
+      tasasActuales = selRegion.value ? D.regiones[selRegion.value] : D.tasas;
+      recalcularEscenarios();
+      refrescar();
+    });
+  }
+
   $("valor").addEventListener("input", refrescar);
   $("anios").addEventListener("input", refrescar);
+  recalcularEscenarios();
   refrescar();
 })();
 </script>

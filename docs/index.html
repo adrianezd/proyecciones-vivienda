@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Precio de la vivienda: proyeccion a partir del INE</title>
-<meta name="description" content="Como evolucionaria el precio de una vivienda si el indice del INE se comportara como en los ultimos treinta años.">
+<meta name="description" content="Como evolucionaria el precio de una vivienda si el indice del INE se comportara como en los ultimos treinta años, con desglose por comunidad autonoma.">
 <link rel="canonical" href="https://adrianezd.github.io/proyecciones-vivienda">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Precio de la vivienda: proyeccion a partir del INE">
-<meta property="og:description" content="Como evolucionaria el precio de una vivienda si el indice del INE se comportara como en los ultimos treinta años.">
+<meta property="og:description" content="Como evolucionaria el precio de una vivienda si el indice del INE se comportara como en los ultimos treinta años, con desglose por comunidad autonoma.">
 <meta property="og:locale" content="es_ES">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="color-scheme" content="light">
@@ -29,9 +29,15 @@
 <main class="marco">
 
 <h1>Precio de la vivienda</h1>
-<p class="bajada">Coge el precio de una vivienda hoy y mira como se mueve si el indice del INE se comporta como hasta ahora.</p>
+<p class="bajada">Coge el precio de una vivienda hoy y mira como se mueve si el indice del INE se comporta como hasta ahora. Elige tu comunidad autonoma si el dato nacional no te sirve.</p>
 
 <div class="mandos">
+  <div class="mando">
+    <label for="region">Comunidad autonoma</label>
+    <select id="region">
+      <option value="">Nacional</option><option value="Andalucía">Andalucía</option><option value="Aragón">Aragón</option><option value="Asturias">Asturias</option><option value="C. Valenciana">C. Valenciana</option><option value="Canarias">Canarias</option><option value="Cantabria">Cantabria</option><option value="Castilla y León">Castilla y León</option><option value="Castilla-La Mancha">Castilla-La Mancha</option><option value="Cataluña">Cataluña</option><option value="Extremadura">Extremadura</option><option value="Galicia">Galicia</option><option value="Illes Balears">Illes Balears</option><option value="La Rioja">La Rioja</option><option value="Madrid">Madrid</option><option value="Murcia">Murcia</option><option value="Navarra">Navarra</option><option value="País Vasco">País Vasco</option>
+    </select>
+  </div>
   <div class="mandos-doble">
     <div class="mando">
       <label for="valor">Precio de la vivienda hoy</label>
@@ -87,7 +93,7 @@
 
 <script src="./estatico/grafica.js"></script>
 
-<script id="datos" type="application/json">{"tasas": [{"anio": 2007, "tasa": 9.8}, {"anio": 2008, "tasa": -1.5}, {"anio": 2009, "tasa": -6.7}, {"anio": 2010, "tasa": -2.0}, {"anio": 2011, "tasa": -7.4}, {"anio": 2012, "tasa": -13.7}, {"anio": 2013, "tasa": -10.6}, {"anio": 2014, "tasa": 0.3}, {"anio": 2015, "tasa": 3.6}, {"anio": 2016, "tasa": 4.7}, {"anio": 2017, "tasa": 6.2}, {"anio": 2018, "tasa": 6.7}, {"anio": 2019, "tasa": 5.1}, {"anio": 2020, "tasa": 2.1}, {"anio": 2021, "tasa": 3.7}, {"anio": 2022, "tasa": 7.4}, {"anio": 2023, "tasa": 4.0}, {"anio": 2024, "tasa": 8.4}, {"anio": 2025, "tasa": 12.7}], "valor_defecto": 200000}</script>
+<script id="datos" type="application/json">{"tasas": [{"anio": 2007, "tasa": 9.8}, {"anio": 2008, "tasa": -1.5}, {"anio": 2009, "tasa": -6.7}, {"anio": 2010, "tasa": -2.0}, {"anio": 2011, "tasa": -7.4}, {"anio": 2012, "tasa": -13.7}, {"anio": 2013, "tasa": -10.6}, {"anio": 2014, "tasa": 0.3}, {"anio": 2015, "tasa": 3.6}, {"anio": 2016, "tasa": 4.7}, {"anio": 2017, "tasa": 6.2}, {"anio": 2018, "tasa": 6.7}, {"anio": 2019, "tasa": 5.1}, {"anio": 2020, "tasa": 2.1}, {"anio": 2021, "tasa": 3.7}, {"anio": 2022, "tasa": 7.4}, {"anio": 2023, "tasa": 4.0}, {"anio": 2024, "tasa": 8.4}, {"anio": 2025, "tasa": 12.7}], "valor_defecto": 200000, "regiones": {"Andalucía": [{"anio": 2007, "tasa": 12.75}, {"anio": 2008, "tasa": 2.07}, {"anio": 2009, "tasa": -3.22}, {"anio": 2010, "tasa": -1.58}, {"anio": 2011, "tasa": -6.0}, {"anio": 2012, "tasa": -11.8}, {"anio": 2013, "tasa": -8.72}, {"anio": 2014, "tasa": 0.17}, {"anio": 2015, "tasa": 3.03}, {"anio": 2016, "tasa": 2.9}, {"anio": 2017, "tasa": 3.17}, {"anio": 2018, "tasa": 4.97}, {"anio": 2019, "tasa": 5.38}, {"anio": 2020, "tasa": 2.35}, {"anio": 2021, "tasa": 4.58}, {"anio": 2022, "tasa": 8.98}, {"anio": 2023, "tasa": 4.95}, {"anio": 2024, "tasa": 10.35}, {"anio": 2025, "tasa": 13.1}, {"anio": 2026, "tasa": 13.3}], "Aragón": [{"anio": 2007, "tasa": 5.92}, {"anio": 2008, "tasa": -2.95}, {"anio": 2009, "tasa": -8.75}, {"anio": 2010, "tasa": -5.4}, {"anio": 2011, "tasa": -8.22}, {"anio": 2012, "tasa": -14.35}, {"anio": 2013, "tasa": -12.7}, {"anio": 2014, "tasa": -2.27}, {"anio": 2015, "tasa": 0.85}, {"anio": 2016, "tasa": 1.88}, {"anio": 2017, "tasa": 2.83}, {"anio": 2018, "tasa": 4.83}, {"anio": 2019, "tasa": 6.1}, {"anio": 2020, "tasa": 2.55}, {"anio": 2021, "tasa": 3.8}, {"anio": 2022, "tasa": 6.42}, {"anio": 2023, "tasa": 3.9}, {"anio": 2024, "tasa": 10.12}, {"anio": 2025, "tasa": 13.97}, {"anio": 2026, "tasa": 15.6}], "Asturias": [{"anio": 2007, "tasa": 12.15}, {"anio": 2008, "tasa": 1.25}, {"anio": 2009, "tasa": -0.93}, {"anio": 2010, "tasa": -1.45}, {"anio": 2011, "tasa": -5.75}, {"anio": 2012, "tasa": -14.53}, {"anio": 2013, "tasa": -12.0}, {"anio": 2014, "tasa": -2.2}, {"anio": 2015, "tasa": 1.5}, {"anio": 2016, "tasa": 1.42}, {"anio": 2017, "tasa": 1.07}, {"anio": 2018, "tasa": 3.52}, {"anio": 2019, "tasa": 4.17}, {"anio": 2020, "tasa": 3.2}, {"anio": 2021, "tasa": 4.15}, {"anio": 2022, "tasa": 6.22}, {"anio": 2023, "tasa": 3.75}, {"anio": 2024, "tasa": 7.77}, {"anio": 2025, "tasa": 13.5}, {"anio": 2026, "tasa": 14.3}], "Illes Balears": [{"anio": 2007, "tasa": 10.45}, {"anio": 2008, "tasa": -0.97}, {"anio": 2009, "tasa": -8.15}, {"anio": 2010, "tasa": -2.0}, {"anio": 2011, "tasa": -5.48}, {"anio": 2012, "tasa": -13.8}, {"anio": 2013, "tasa": -7.12}, {"anio": 2014, "tasa": 0.45}, {"anio": 2015, "tasa": 6.38}, {"anio": 2016, "tasa": 6.23}, {"anio": 2017, "tasa": 7.95}, {"anio": 2018, "tasa": 7.5}, {"anio": 2019, "tasa": 6.03}, {"anio": 2020, "tasa": 4.1}, {"anio": 2021, "tasa": 5.8}, {"anio": 2022, "tasa": 9.28}, {"anio": 2023, "tasa": 4.08}, {"anio": 2024, "tasa": 6.6}, {"anio": 2025, "tasa": 11.97}, {"anio": 2026, "tasa": 13.6}], "Canarias": [{"anio": 2007, "tasa": 12.18}, {"anio": 2008, "tasa": 1.88}, {"anio": 2009, "tasa": -3.8}, {"anio": 2010, "tasa": -2.47}, {"anio": 2011, "tasa": -5.72}, {"anio": 2012, "tasa": -13.3}, {"anio": 2013, "tasa": -8.5}, {"anio": 2014, "tasa": -1.25}, {"anio": 2015, "tasa": 3.4}, {"anio": 2016, "tasa": 3.38}, {"anio": 2017, "tasa": 4.38}, {"anio": 2018, "tasa": 4.97}, {"anio": 2019, "tasa": 3.82}, {"anio": 2020, "tasa": 1.15}, {"anio": 2021, "tasa": 5.75}, {"anio": 2022, "tasa": 9.12}, {"anio": 2023, "tasa": 5.28}, {"anio": 2024, "tasa": 8.0}, {"anio": 2025, "tasa": 11.8}, {"anio": 2026, "tasa": 10.7}], "Cantabria": [{"anio": 2007, "tasa": 9.97}, {"anio": 2008, "tasa": 1.28}, {"anio": 2009, "tasa": -6.8}, {"anio": 2010, "tasa": -6.02}, {"anio": 2011, "tasa": -9.3}, {"anio": 2012, "tasa": -14.12}, {"anio": 2013, "tasa": -8.95}, {"anio": 2014, "tasa": 1.75}, {"anio": 2015, "tasa": 2.9}, {"anio": 2016, "tasa": 2.55}, {"anio": 2017, "tasa": 4.03}, {"anio": 2018, "tasa": 5.85}, {"anio": 2019, "tasa": 3.1}, {"anio": 2020, "tasa": 1.22}, {"anio": 2021, "tasa": 5.47}, {"anio": 2022, "tasa": 9.7}, {"anio": 2023, "tasa": 5.13}, {"anio": 2024, "tasa": 9.02}, {"anio": 2025, "tasa": 11.8}, {"anio": 2026, "tasa": 14.0}], "Castilla y León": [{"anio": 2007, "tasa": 11.23}, {"anio": 2008, "tasa": 2.23}, {"anio": 2009, "tasa": -2.67}, {"anio": 2010, "tasa": -2.75}, {"anio": 2011, "tasa": -6.2}, {"anio": 2012, "tasa": -13.2}, {"anio": 2013, "tasa": -14.05}, {"anio": 2014, "tasa": -2.38}, {"anio": 2015, "tasa": 1.2}, {"anio": 2016, "tasa": 1.05}, {"anio": 2017, "tasa": 1.65}, {"anio": 2018, "tasa": 4.1}, {"anio": 2019, "tasa": 4.82}, {"anio": 2020, "tasa": 2.35}, {"anio": 2021, "tasa": 3.55}, {"anio": 2022, "tasa": 6.08}, {"anio": 2023, "tasa": 2.83}, {"anio": 2024, "tasa": 7.85}, {"anio": 2025, "tasa": 13.93}, {"anio": 2026, "tasa": 14.9}], "Castilla-La Mancha": [{"anio": 2007, "tasa": 13.53}, {"anio": 2008, "tasa": 2.1}, {"anio": 2009, "tasa": -2.98}, {"anio": 2010, "tasa": -1.15}, {"anio": 2011, "tasa": -6.4}, {"anio": 2012, "tasa": -11.6}, {"anio": 2013, "tasa": -15.1}, {"anio": 2014, "tasa": -2.6}, {"anio": 2015, "tasa": 2.17}, {"anio": 2016, "tasa": 0.85}, {"anio": 2017, "tasa": 0.75}, {"anio": 2018, "tasa": 2.38}, {"anio": 2019, "tasa": 3.52}, {"anio": 2020, "tasa": 1.27}, {"anio": 2021, "tasa": 2.42}, {"anio": 2022, "tasa": 5.92}, {"anio": 2023, "tasa": 1.67}, {"anio": 2024, "tasa": 6.45}, {"anio": 2025, "tasa": 11.53}, {"anio": 2026, "tasa": 11.4}], "Cataluña": [{"anio": 2007, "tasa": 7.3}, {"anio": 2008, "tasa": -6.2}, {"anio": 2009, "tasa": -11.4}, {"anio": 2010, "tasa": -2.7}, {"anio": 2011, "tasa": -9.6}, {"anio": 2012, "tasa": -15.8}, {"anio": 2013, "tasa": -11.4}, {"anio": 2014, "tasa": 1.1}, {"anio": 2015, "tasa": 4.8}, {"anio": 2016, "tasa": 7.0}, {"anio": 2017, "tasa": 9.6}, {"anio": 2018, "tasa": 8.8}, {"anio": 2019, "tasa": 5.2}, {"anio": 2020, "tasa": 2.0}, {"anio": 2021, "tasa": 3.5}, {"anio": 2022, "tasa": 7.1}, {"anio": 2023, "tasa": 3.5}, {"anio": 2024, "tasa": 7.4}, {"anio": 2025, "tasa": 11.3}], "C. Valenciana": [{"anio": 2007, "tasa": 12.1}, {"anio": 2008, "tasa": 2.1}, {"anio": 2009, "tasa": -5.4}, {"anio": 2010, "tasa": -3.1}, {"anio": 2011, "tasa": -7.4}, {"anio": 2012, "tasa": -13.6}, {"anio": 2013, "tasa": -9.0}, {"anio": 2014, "tasa": 0.8}, {"anio": 2015, "tasa": 2.4}, {"anio": 2016, "tasa": 2.6}, {"anio": 2017, "tasa": 2.7}, {"anio": 2018, "tasa": 4.1}, {"anio": 2019, "tasa": 4.2}, {"anio": 2020, "tasa": 2.2}, {"anio": 2021, "tasa": 4.3}, {"anio": 2022, "tasa": 7.2}, {"anio": 2023, "tasa": 4.0}, {"anio": 2024, "tasa": 9.1}, {"anio": 2025, "tasa": 12.9}], "Extremadura": [{"anio": 2007, "tasa": 14.2}, {"anio": 2008, "tasa": 3.2}, {"anio": 2009, "tasa": -0.4}, {"anio": 2010, "tasa": 1.4}, {"anio": 2011, "tasa": -6.1}, {"anio": 2012, "tasa": -8.2}, {"anio": 2013, "tasa": -14.7}, {"anio": 2014, "tasa": -4.1}, {"anio": 2015, "tasa": 1.9}, {"anio": 2016, "tasa": 1.4}, {"anio": 2017, "tasa": 0.4}, {"anio": 2018, "tasa": 1.9}, {"anio": 2019, "tasa": 2.0}, {"anio": 2020, "tasa": 0.5}, {"anio": 2021, "tasa": 2.3}, {"anio": 2022, "tasa": 5.4}, {"anio": 2023, "tasa": 1.5}, {"anio": 2024, "tasa": 7.3}, {"anio": 2025, "tasa": 12.3}], "Galicia": [{"anio": 2007, "tasa": 11.4}, {"anio": 2008, "tasa": 3.4}, {"anio": 2009, "tasa": -1.2}, {"anio": 2010, "tasa": -2.0}, {"anio": 2011, "tasa": -5.1}, {"anio": 2012, "tasa": -12.9}, {"anio": 2013, "tasa": -11.2}, {"anio": 2014, "tasa": -1.2}, {"anio": 2015, "tasa": 1.4}, {"anio": 2016, "tasa": 2.0}, {"anio": 2017, "tasa": 1.7}, {"anio": 2018, "tasa": 3.8}, {"anio": 2019, "tasa": 4.0}, {"anio": 2020, "tasa": 2.2}, {"anio": 2021, "tasa": 4.6}, {"anio": 2022, "tasa": 6.6}, {"anio": 2023, "tasa": 3.6}, {"anio": 2024, "tasa": 7.4}, {"anio": 2025, "tasa": 12.9}], "Madrid": [{"anio": 2007, "tasa": 7.05}, {"anio": 2008, "tasa": -5.65}, {"anio": 2009, "tasa": -10.3}, {"anio": 2010, "tasa": 0.43}, {"anio": 2011, "tasa": -8.7}, {"anio": 2012, "tasa": -15.3}, {"anio": 2013, "tasa": -11.18}, {"anio": 2014, "tasa": 2.57}, {"anio": 2015, "tasa": 5.72}, {"anio": 2016, "tasa": 8.57}, {"anio": 2017, "tasa": 11.42}, {"anio": 2018, "tasa": 10.2}, {"anio": 2019, "tasa": 5.92}, {"anio": 2020, "tasa": 1.73}, {"anio": 2021, "tasa": 2.55}, {"anio": 2022, "tasa": 6.82}, {"anio": 2023, "tasa": 3.95}, {"anio": 2024, "tasa": 7.65}, {"anio": 2025, "tasa": 13.32}, {"anio": 2026, "tasa": 13.6}], "Murcia": [{"anio": 2007, "tasa": 14.78}, {"anio": 2008, "tasa": 3.6}, {"anio": 2009, "tasa": -1.0}, {"anio": 2010, "tasa": -1.05}, {"anio": 2011, "tasa": -5.05}, {"anio": 2012, "tasa": -11.15}, {"anio": 2013, "tasa": -15.27}, {"anio": 2014, "tasa": 0.25}, {"anio": 2015, "tasa": 1.67}, {"anio": 2016, "tasa": 1.43}, {"anio": 2017, "tasa": 1.23}, {"anio": 2018, "tasa": 3.43}, {"anio": 2019, "tasa": 4.57}, {"anio": 2020, "tasa": 3.05}, {"anio": 2021, "tasa": 5.2}, {"anio": 2022, "tasa": 7.67}, {"anio": 2023, "tasa": 2.3}, {"anio": 2024, "tasa": 8.47}, {"anio": 2025, "tasa": 14.32}, {"anio": 2026, "tasa": 15.6}], "Navarra": [{"anio": 2007, "tasa": 7.68}, {"anio": 2008, "tasa": -2.35}, {"anio": 2009, "tasa": -9.95}, {"anio": 2010, "tasa": -6.32}, {"anio": 2011, "tasa": -7.7}, {"anio": 2012, "tasa": -13.98}, {"anio": 2013, "tasa": -11.35}, {"anio": 2014, "tasa": -6.45}, {"anio": 2015, "tasa": 0.62}, {"anio": 2016, "tasa": 1.68}, {"anio": 2017, "tasa": 2.2}, {"anio": 2018, "tasa": 3.47}, {"anio": 2019, "tasa": 3.78}, {"anio": 2020, "tasa": 1.68}, {"anio": 2021, "tasa": 2.83}, {"anio": 2022, "tasa": 7.27}, {"anio": 2023, "tasa": 5.92}, {"anio": 2024, "tasa": 10.38}, {"anio": 2025, "tasa": 11.42}, {"anio": 2026, "tasa": 10.5}], "País Vasco": [{"anio": 2007, "tasa": 8.35}, {"anio": 2008, "tasa": -3.5}, {"anio": 2009, "tasa": -10.22}, {"anio": 2010, "tasa": -1.6}, {"anio": 2011, "tasa": -7.7}, {"anio": 2012, "tasa": -15.1}, {"anio": 2013, "tasa": -8.25}, {"anio": 2014, "tasa": -0.47}, {"anio": 2015, "tasa": 0.98}, {"anio": 2016, "tasa": 2.57}, {"anio": 2017, "tasa": 5.17}, {"anio": 2018, "tasa": 5.42}, {"anio": 2019, "tasa": 4.35}, {"anio": 2020, "tasa": 2.28}, {"anio": 2021, "tasa": 2.1}, {"anio": 2022, "tasa": 6.38}, {"anio": 2023, "tasa": 3.45}, {"anio": 2024, "tasa": 8.5}, {"anio": 2025, "tasa": 12.18}, {"anio": 2026, "tasa": 10.3}], "La Rioja": [{"anio": 2007, "tasa": 10.85}, {"anio": 2008, "tasa": 0.7}, {"anio": 2009, "tasa": -5.43}, {"anio": 2010, "tasa": -3.77}, {"anio": 2011, "tasa": -11.05}, {"anio": 2012, "tasa": -14.55}, {"anio": 2013, "tasa": -13.53}, {"anio": 2014, "tasa": -2.18}, {"anio": 2015, "tasa": 0.53}, {"anio": 2016, "tasa": 1.95}, {"anio": 2017, "tasa": 2.02}, {"anio": 2018, "tasa": 4.92}, {"anio": 2019, "tasa": 5.38}, {"anio": 2020, "tasa": 1.9}, {"anio": 2021, "tasa": 3.55}, {"anio": 2022, "tasa": 7.17}, {"anio": 2023, "tasa": 2.8}, {"anio": 2024, "tasa": 9.2}, {"anio": 2025, "tasa": 13.85}, {"anio": 2026, "tasa": 14.3}]}}</script>
 <script>
 (function(){
   const D = JSON.parse(document.getElementById("datos").textContent);
@@ -101,15 +107,20 @@
     return b===a ? o[b] : o[b]+(o[a]-o[b])*(i-b);
   }
 
-  const tasas = D.tasas.map(t=>t.tasa);
-  const pb=pct(tasas,.25), pm=pct(tasas,.50), pa=pct(tasas,.75);
-  const anioBase = D.tasas[D.tasas.length-1].anio;
+  let tasasActuales = D.tasas;
+  let pb, pm, pa, anioBase;
 
-  Grafica.barras("#gr-barras", {
-    datos: D.tasas.map(t=>({x:t.anio, y:t.tasa})),
-    formato: v => Grafica.numero(v,1)+" %",
-    titulo: "Variacion anual de cada año"
-  });
+  function recalcularEscenarios(){
+    const tasas = tasasActuales.map(t=>t.tasa);
+    pb = pct(tasas,.25); pm = pct(tasas,.50); pa = pct(tasas,.75);
+    anioBase = tasasActuales[tasasActuales.length-1].anio;
+
+    Grafica.barras("#gr-barras", {
+      datos: tasasActuales.map(t=>({x:t.anio, y:t.tasa})),
+      formato: v => Grafica.numero(v,1)+" %",
+      titulo: "Variacion anual de cada año"
+    });
+  }
 
   function refrescar(){
     let v = parseFloat($("valor").value);
@@ -118,8 +129,8 @@
     $("salida-anios").textContent = n + (n===1?" año":" años");
 
     const pasado=[{anio:anioBase, valor:v}];
-    for(let k=D.tasas.length-1;k>=0;k--){
-      pasado.unshift({anio:D.tasas[k].anio-1, valor: pasado[0].valor/(1+D.tasas[k].tasa/100)});
+    for(let k=tasasActuales.length-1;k>=0;k--){
+      pasado.unshift({anio:tasasActuales[k].anio-1, valor: pasado[0].valor/(1+tasasActuales[k].tasa/100)});
     }
 
     const futuro=[];
@@ -139,7 +150,7 @@
 
     $("d-media").textContent = Grafica.numero(pm,1)+" %";
     $("d-rango").textContent = Grafica.numero(pb,1)+" a "+Grafica.numero(pa,1)+" %";
-    $("d-anios").textContent = D.tasas.length;
+    $("d-anios").textContent = tasasActuales.length;
 
     Grafica.linea("#gr-linea", {
       pasado: pasado.map(p=>({x:p.anio, y:p.valor})),
@@ -150,8 +161,18 @@
     });
   }
 
+  const selRegion = $("region");
+  if(selRegion){
+    selRegion.addEventListener("change", () => {
+      tasasActuales = selRegion.value ? D.regiones[selRegion.value] : D.tasas;
+      recalcularEscenarios();
+      refrescar();
+    });
+  }
+
   $("valor").addEventListener("input", refrescar);
   $("anios").addEventListener("input", refrescar);
+  recalcularEscenarios();
   refrescar();
 })();
 </script>

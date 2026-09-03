@@ -35,6 +35,35 @@ INE = "https://servicios.ine.es/wstempus/js/ES"
 BUSQUEDA = {"operacion": ["precios de la vivienda"],
             "serie": ["nacional", "general", "variación anual"]}
 
+# Para el desglose por comunidad autonoma: el INE nombra la serie regional
+# como "<nombre>. General. Variación anual." Se exige que el nombre EMPIECE
+# por el termino (con el punto detras) para no colar series de municipio
+# que solo contienen el nombre de la comunidad por dentro (p.ej. una serie
+# de un pueblo de Asturias no debe colarse en la fila de Asturias).
+# El termino incluye ya el punto final: el INE usa a veces el nombre
+# corto ("Cantabria.") y a veces el oficial largo ("Asturias, Principado
+# de."), y sin el punto un "Madrid" suelto colaria "Madrid, Comunidad de"
+# pero tambien series de distrito que empiezan igual.
+CCAA = [
+    ("Andalucía", "andalucía."),
+    ("Aragón", "aragón."),
+    ("Asturias", "asturias, principado de."),
+    ("Illes Balears", "balears, illes."),
+    ("Canarias", "canarias."),
+    ("Cantabria", "cantabria."),
+    ("Castilla y León", "castilla y león."),
+    ("Castilla-La Mancha", "castilla - la mancha."),
+    ("Cataluña", "cataluña."),
+    ("C. Valenciana", "comunitat valenciana."),
+    ("Extremadura", "extremadura."),
+    ("Galicia", "galicia."),
+    ("Madrid", "madrid, comunidad de."),
+    ("Murcia", "murcia, región de."),
+    ("Navarra", "navarra, comunidad foral de."),
+    ("País Vasco", "país vasco."),
+    ("La Rioja", "rioja, la."),
+]
+
 ANIO_MINIMO = dt.date.today().year - 2   # una serie sin datos recientes esta muerta
 
 
@@ -64,13 +93,20 @@ def listar_operaciones() -> list[dict]:
             for o in datos if o.get("Nombre")]
 
 
+_CACHE_SERIES: dict[str, list[dict]] = {}
+
+
 def listar_series(operacion: str) -> list[dict]:
+    if operacion in _CACHE_SERIES:
+        return _CACHE_SERIES[operacion]
     datos = _descargar(f"{INE}/SERIES_OPERACION/{operacion}",
                        f"series-{operacion}", {"page": 1})
     if not isinstance(datos, list):
         return []
-    return [{"codigo": s.get("COD"), "nombre": s.get("Nombre") or ""}
-            for s in datos if s.get("COD")]
+    salida = [{"codigo": s.get("COD"), "nombre": s.get("Nombre") or ""}
+              for s in datos if s.get("COD")]
+    _CACHE_SERIES[operacion] = salida
+    return salida
 
 
 def tasas_anuales(codigo: str) -> list[dict]:
@@ -109,6 +145,27 @@ def _ultimo_anio(codigo: str) -> int:
     return filas[-1]["anio"] if filas else 0
 
 
+_operacion_cod: str | None = None
+_operacion_buscada = False
+
+
+def _operacion() -> str | None:
+    """Codigo de la operacion estadistica, buscado una sola vez por nombre."""
+    global _operacion_cod, _operacion_buscada
+    if _operacion_buscada:
+        return _operacion_cod
+    _operacion_buscada = True
+
+    operaciones = [o for o in listar_operaciones()
+                   if all(p.lower() in o["nombre"].lower() for p in BUSQUEDA["operacion"])]
+    if not operaciones:
+        print(f"  SIN OPERACION  vivienda: ninguna con {BUSQUEDA['operacion']}")
+        return None
+
+    _operacion_cod = str(operaciones[0]["cod"])
+    return _operacion_cod
+
+
 def localizar_serie() -> str | None:
     """Encuentra el codigo de serie del INE para el precio de la vivienda.
 
@@ -118,22 +175,15 @@ def localizar_serie() -> str | None:
       3. Comprueba que la serie sigue viva: el INE conserva publicadas las
          series de bases antiguas, congeladas hace años, sin avisar.
     """
-    operaciones = [o for o in listar_operaciones()
-                   if all(p.lower() in o["nombre"].lower() for p in BUSQUEDA["operacion"])]
-
-    if not operaciones:
-        print(f"  SIN OPERACION  vivienda: ninguna con {BUSQUEDA['operacion']}")
+    operacion = _operacion()
+    if not operacion:
         return None
 
-    candidatas = []
-    for op in operaciones:
-        for s in listar_series(str(op["cod"])):
-            nombre = (s.get("nombre") or "").lower()
-            if all(p.lower() in nombre for p in BUSQUEDA["serie"]):
-                candidatas.append(s)
+    candidatas = [s for s in listar_series(operacion)
+                  if all(p.lower() in (s.get("nombre") or "").lower() for p in BUSQUEDA["serie"])]
 
     if not candidatas:
-        print(f"  SIN SERIE   vivienda: nada con {BUSQUEDA['serie']} en {[o['nombre'][:40] for o in operaciones]}")
+        print(f"  SIN SERIE   vivienda: nada con {BUSQUEDA['serie']}")
         return None
 
     # El INE anade las series nuevas al final, asi que se prueban del reves.
@@ -146,3 +196,38 @@ def localizar_serie() -> str | None:
 
     print("  SIN SERIE   vivienda: todas las candidatas estan desactualizadas")
     return None
+
+
+def localizar_series_regionales() -> list[tuple[str, str]]:
+    """Para cada comunidad autonoma, busca su serie de variacion anual.
+
+    Reutiliza la lista de series ya descargada para la busqueda nacional
+    (una sola llamada de red para las 17 comunidades). Una comunidad sin
+    serie viva se omite del selector: mejor un desplegable mas corto que
+    un dato inventado.
+    """
+    operacion = _operacion()
+    if not operacion:
+        return []
+
+    todas = listar_series(operacion)
+    salida = []
+
+    for nombre_mostrado, termino in CCAA:
+        candidatas = [
+            s for s in todas
+            if (s.get("nombre") or "").lower().strip().startswith(termino.lower())
+            and "variación anual" in (s.get("nombre") or "").lower()
+            and "general" in (s.get("nombre") or "").lower()
+        ]
+        for s in reversed(candidatas[-5:]):
+            anio = _ultimo_anio(s["codigo"])
+            if anio >= ANIO_MINIMO:
+                print(f"  region      {nombre_mostrado} -> {s['codigo']}  hasta {anio}")
+                salida.append((nombre_mostrado, s["codigo"]))
+                break
+        else:
+            if candidatas:
+                print(f"  SIN REGION  {nombre_mostrado}: candidatas desactualizadas")
+
+    return salida
